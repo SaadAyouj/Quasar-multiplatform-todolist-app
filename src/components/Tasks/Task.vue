@@ -1,11 +1,13 @@
 <template>
   <q-item
-		  	@click="task.completed = !task.completed"
+		  	@click="updateTask({ id: id, updates:{ completed: !task.completed } })"
 		  	:class="!task.completed ? 'bg-amber-1' : 'bg-light-green-1'"
 		  	clickable
 		  	v-ripple>
 		    <q-item-section side top>
-		      <q-checkbox v-model="task.completed" />
+		      <q-checkbox
+            :value="task.completed"
+            class="no-pointer-events" />
 		    </q-item-section>
 
 		    <q-item-section>
@@ -15,7 +17,8 @@
 		      </q-item-label>
 		    </q-item-section>
 
-		    <q-item-section side>
+		    <q-item-section
+        v-if="task.dueDate" side>
 		    	<div class="row">
 		    		<div class="column justify-center">
 				    	<q-icon
@@ -38,12 +41,43 @@
 			    	</div>
 		    	</div>
         </q-item-section>
+
+        <q-item-section side>
+          <q-btn
+          @click.stop="promptToDelete(id)"
+            flat
+            dense
+            color="red"
+            round
+            icon="delete_forever" />
+        </q-item-section>
 		  </q-item>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  props:['task','id']
+  props:['task','id'],
+  methods:{
+    ...mapActions('tasks', ['updateTask','deleteTask']),
+    promptToDelete(id){
+      this.$q.dialog({
+        title: 'Confirm',
+        message: 'Delete?',
+        ok: {
+          push: true
+        },
+        cancel: {
+          push: true,
+          color: 'negative'
+        },
+        persistent: true
+      }).onOk(() => {
+        this.deleteTask(id)
+      })
+    }
+  }
 }
 </script>
 
