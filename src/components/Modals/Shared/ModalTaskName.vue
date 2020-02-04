@@ -9,13 +9,22 @@
               class="col"
               ref="name"
               autofocus
+              v-select-all
               clearable />
   </div>
 </template>
 
 <script>
 export default {
-  props:['name']
+  props:['name'],
+  directives: {
+    selectAll: {
+      inserted(el) {
+        let input = el.querySelector('.q-field__native')
+        input.addEventListner
+      }
+    }
+  }
 }
 </script>
 
