@@ -2,6 +2,8 @@
 
   <q-select
        filled
+       transition-show="flip-up"
+       transition-hide="flip-down"
        v-model="sortBy"
        :options="options"
        emit-value

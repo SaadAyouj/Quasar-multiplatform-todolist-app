@@ -2,6 +2,7 @@
   <div class="row q-mb-sm">
               <q-input
               outlined
+              v-select-all
               :value="name"
               @input="$emit('update:name', $event)"
               label="Task Name *"
@@ -9,21 +10,16 @@
               class="col"
               ref="name"
               autofocus
-              v-select-all
               clearable />
   </div>
 </template>
 
 <script>
+import { selectAll } from 'src/directives/directive-select-all.js'
 export default {
   props:['name'],
   directives: {
-    selectAll: {
-      inserted(el) {
-        let input = el.querySelector('.q-field__native')
-        input.addEventListner
-      }
-    }
+    selectAll
   }
 }
 </script>
