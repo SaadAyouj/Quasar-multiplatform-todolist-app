@@ -1,4 +1,9 @@
 <template>
+<transition
+  appear
+  enter-active-class="animated bounceInLeft"
+  leave-active-class="animated bounceOutRight absolute-bottom"
+>
   <div class="q-mt-lg">
       <q-banner
       dense
@@ -19,6 +24,7 @@
 
         </q-list>
   </div>
+</transition>
 </template>
 
 <script>
