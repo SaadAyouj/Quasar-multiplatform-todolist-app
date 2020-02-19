@@ -1,12 +1,117 @@
 <template>
   <q-page padding>
-    <p>Settings Page</p>
+
+    <q-list
+    class="q-mb-md"
+    bordered
+    padding
+    dense>
+      <q-item-label header>Settings</q-item-label>
+
+      <q-item tag="label" v-ripple>
+        <q-item-section>
+          <q-item-label>Show 12 Hour Time Format</q-item-label>
+        </q-item-section>
+        <q-item-section side >
+          <q-toggle
+          color="blue"
+          v-model="show12Hour" />
+        </q-item-section>
+      </q-item>
+
+      <q-item tag="label" v-ripple>
+        <q-item-section>
+          <q-item-label>Show Tasks In One List</q-item-label>
+        </q-item-section>
+        <q-item-section side >
+          <q-toggle
+          color="blue"
+          v-model="showTasksInOneList" />
+        </q-item-section>
+      </q-item>
+    </q-list>
+
+
+    <q-list
+    bordered
+    padding
+    >
+      <q-item-label header>More</q-item-label>
+
+      <q-item
+      to="/settings/help"
+      tag="label"
+      v-ripple>
+        <q-item-section>
+          <q-item-label>Help</q-item-label>
+        </q-item-section>
+        <q-item-section side >
+          <q-icon name="chevron_right" />
+        </q-item-section>
+      </q-item>
+
+      <q-item
+      @click="visitMyWebsite"
+      tag="label"
+      v-ripple>
+        <q-item-section>
+          <q-item-label>Visit my website</q-item-label>
+        </q-item-section>
+        <q-item-section side >
+          <q-icon name="chevron_right" />
+        </q-item-section>
+      </q-item>
+
+      <q-item
+      @click="emailUs"
+      tag="label"
+      v-ripple>
+        <q-item-section>
+          <q-item-label>Email Us</q-item-label>
+        </q-item-section>
+        <q-item-section side >
+          <q-icon name="chevron_right" />
+        </q-item-section>
+      </q-item>
+
+    </q-list>
+
   </q-page>
 </template>
 
 <script>
-export default {
+import { mapGetters, mapActions } from 'vuex'
+import { openURL } from 'quasar'
 
+export default {
+ computed: {
+   ...mapGetters('settings', ['settings']),
+   show12Hour: {
+     get() {
+       return this.settings.show12Hour
+     },
+     set(value) {
+       this.setShow12Hour(value)
+     }
+   },
+   showTasksInOneList: {
+     get() {
+       return this.settings.showTasksInOneList
+     },
+     set(value) {
+       this.setShowTasksInOneList(value)
+     }
+   },
+ },
+ methods: {
+   ...mapActions('settings', ['setShow12Hour', 'setShowTasksInOneList']),
+   visitMyWebsite () {
+     openURL('https://saad-ayouj.netlify.com')
+   },
+   emailUs() {
+     window.location.href = 'mailto:saadayoujweb@gmail.com?subject=MultiPlatform Todo Feedback'
+   }
+ }
 }
 </script>
 

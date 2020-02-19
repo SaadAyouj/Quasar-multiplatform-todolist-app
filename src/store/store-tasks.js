@@ -3,24 +3,26 @@ import { uid } from 'quasar'
 
 const state = {
   tasks:{
-    'ID1':{
-      name:'Go to Gym',
-      completed: false,
-      dueDate:'2020/04/27',
-      dueTime:'07:00'
-    },
-    'ID2':{
-        name:'Be rich',
-        completed: false,
-        dueDate:'2020/12/30',
-        dueTime:'00:00'
-    },
-    'ID3':{
-        name:'Go to Canada',
-        completed: false,
-        dueDate:'2022/01/01',
-        dueTime:'18:30'
-    }
+    // 'TMLumqFAEJPD5BA1vVJWiK4tVo03:': {
+    //   'ID1':{
+    //       name:'Go to Gym',
+    //       completed: false,
+    //       dueDate:'2020/04/27',
+    //       dueTime:'07:00'
+    //   },
+    //   'ID2':{
+    //       name:'Be rich',
+    //       completed: false,
+    //       dueDate:'2020/12/30',
+    //       dueTime:'00:00'
+    //   },
+    //   'ID3':{
+    //       name:'Go to Canada',
+    //       completed: false,
+    //       dueDate:'2022/01/01',
+    //       dueTime:'18:30'
+    //   }
+    // }
   },
   search: '',
   sort: 'dueDate'

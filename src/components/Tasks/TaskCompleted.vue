@@ -2,15 +2,18 @@
 <transition
   appear
   enter-active-class="animated bounceInLeft"
-  leave-active-class="animated bounceOutRight absolute-bottom"
+  leave-active-class="animated bounceOutDown"
 >
-  <div class="q-mt-lg">
+  <div
+  :class="{ 'q-mt-lg' : !settings.showTasksInOneList }">
       <q-banner
+      v-if="!settings.showTasksInOneList"
       dense
       inline-actions
       class="radius text-white bg-green-4 text-center">
           <span class="text-bold text-subtitle1">You Have Completed These Tasks.</span>
       </q-banner>
+
       <q-list
           separator
           bordered>
@@ -28,8 +31,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props:['tasksCompleted'],
+  computed: {
+    ...mapGetters('settings', ['settings'])
+  },
   components:{
     'task': require('./Task').default,
   }

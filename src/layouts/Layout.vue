@@ -4,9 +4,27 @@
       <q-toolbar>
 
         <q-toolbar-title
-        class="absolute-center">
+        class="absolute-center text-h6">
           <b>Multi-Platform Todo</b>
         </q-toolbar-title>
+
+        <q-btn
+        v-if="!loggedIn"
+        to="/auth"
+        flat
+        icon-right="account_circle"
+        class="absolute-right"
+        :ripple="{ center: true }"
+        label="Login" />
+
+        <q-btn
+        v-else
+        @click="logoutUser"
+        flat
+        icon-right="exit_to_app"
+        class="absolute-right text-overline"
+        :ripple="{ center: true }"
+        label="Logout" />
 
       </q-toolbar>
     </q-header>
@@ -60,6 +78,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'MyLayout',
 
@@ -79,6 +99,12 @@ export default {
       },
       ]
     }
+  },
+  computed: {
+    ...mapState('auth', ['loggedIn'])
+  },
+  methods: {
+    ...mapActions('auth', ['logoutUser'])
   }
 }
 </script>

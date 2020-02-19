@@ -2,10 +2,11 @@
 <transition
   appear
   enter-active-class="animated bounceInLeft"
-  leave-active-class="animated bounceOutRight absolute-top"
+  leave-active-class="animated bounceOutRight absolute"
 >
   <div>
     <q-banner
+    v-if="!settings.showTasksInOneList"
     dense
     inline-actions
     class="radius text-white bg-orange-4 text-center">
@@ -28,8 +29,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props:['tasksTodo'],
+  computed: {
+    ...mapGetters('settings', ['settings'])
+  },
   components:{
     'task': require('./Task').default,
   }

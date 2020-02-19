@@ -1,5 +1,6 @@
 <template>
-  <q-page class="q-pa-md">
+  <q-page>
+    <div class="q-pa-md absolute full-width full-height column">
     <div class="row q-mb-lg">
       <search />
       <sort />
@@ -10,10 +11,22 @@
     v-if="search && !Object.keys(tasksTodo).length && !Object.keys(tasksCompleted).length">
     No search result</p>
 
-   <div class="class relative-position">
+    <q-scroll-area
+        :thumb-style="thumbStyle"
+        :bar-style="barStyle"
+        class="q-scroll-area-tasks"
+      >
 
     <no-task
-    v-if="!Object.keys(tasksTodo).length && !search" />
+    v-if="!Object.keys(tasksTodo).length && !search && !settings.showTasksInOneList" />
+
+    <q-banner
+      v-if="settings.showTasksInOneList && !search"
+      dense
+      inline-actions
+      class="radius text-white bg-blue-4 text-center">
+          <span class="text-bold text-subtitle1">All Your Tasks.</span>
+      </q-banner>
 
 		<task-todo
     v-if="Object.keys(tasksTodo).length"
@@ -22,20 +35,22 @@
 
     <task-completed
     v-if="Object.keys(tasksCompleted).length"
-    :tasksCompleted="tasksCompleted" />
+    :tasksCompleted="tasksCompleted"
+    class="q-mb-xl" />
 
-   </div>
+    </q-scroll-area>
 
-    <div class="absolute-bottom text-center q-mb-lg">
+    <div class="absolute-bottom text-center q-mb-lg no-pointer-events">
     <q-btn
     @click="ShowAddTask = true"
       round
+      class="all-pointer-events"
       color="primary"
       size="24px"
       icon="add"
     />
     </div>
-
+    </div>
     <q-dialog v-model="ShowAddTask">
       <add-task @close="ShowAddTask = false"></add-task>
     </q-dialog>
@@ -62,7 +77,27 @@ export default {
   },
   computed: {
     ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
-    ...mapState('tasks', ['search'])
+    ...mapGetters('settings', ['settings']),
+    ...mapState('tasks', ['search']),
+    thumbStyle () {
+      return {
+        right: '1.5px',
+        borderRadius: '5px',
+        backgroundColor: '#027be3',
+        width: '5px',
+        opacity: 0.75
+      }
+    },
+
+    barStyle () {
+      return {
+        right: '0.1px',
+        borderRadius: '9px',
+        backgroundColor: '#027be3',
+        width: '9px',
+        opacity: 0.2
+      }
+    }
   },
   mounted() {
     this.$root.$on('showAddTask', () => {
@@ -71,3 +106,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+ .q-scroll-area-tasks {
+   display: flex;
+   flex-grow: 1;
+   .mobile & {
+     flex-basis: 100px;
+   }
+ }
+</style>
